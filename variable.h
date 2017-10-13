@@ -5,7 +5,7 @@ public:
     {
         this->name = name;
     }
-    double Variable::evaluate();
+    double evaluate();
 private:
     string name;
 };

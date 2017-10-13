@@ -35,6 +35,22 @@ Expression* SubExpression::parse()
             return new Times(left, right);
         case '/':
             return new Divide(left, right);
+        case '>':
+            return new GreaterThan(left, right);
+        case '<':
+            return new LessThan(left, right);
+        case '=':
+            return new Equals(left, right);
+        case '&':
+            return new And(left, right);
+        case '|':
+            return new Or(left, right);
     }
     return 0;
+}
+
+// recursively traverses the expression and finds the value
+// looks at the symbol table to determine variable values
+double SubExpression::evaluate() {
+    
 }

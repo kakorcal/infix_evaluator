@@ -16,7 +16,7 @@ Expression* Operand::parse()
 {
     char paren;
     double value;
-
+    cout << "Enter character: ";
     cin >> ws;
     if (isdigit(cin.peek()))
     {

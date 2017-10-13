@@ -5,16 +5,14 @@ using namespace std;
 
 #include "parse.h"
 
-string parseName()
+string parseName(string var)
 {
-    char alnum;
     string name = "";
-
-    cin >> ws;
-    while (isalnum(cin.peek()))
+    int idx = 0;
+    while (isalnum(var[idx]) || var.size() > idx)
     {
-        cin >> alnum;
-        name += alnum;
+        name += var[idx];
+        idx++;
     }
     return name;
 }

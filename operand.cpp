@@ -12,24 +12,20 @@ using namespace std;
 #include "literal.h"
 #include "parse.h"
 
-Expression* Operand::parse()
+Expression* Operand::parse(string exp)
 {
-    char paren;
-    double value;
-    cout << "Enter character: ";
-    cin >> ws;
-    if (isdigit(cin.peek()))
+    
+    if (isdigit(exp[0]))
     {
-        cin >> value;
-        Expression* literal = new Literal(value);
+        int digit = exp[0] - '0';
+        Expression* literal = new Literal(digit);
         return literal;
     }
-    if (cin.peek() == '(')
+    if (exp[0] == '(')
     {
-        cin >> paren;
-        return SubExpression::parse();
+        return SubExpression::parse(exp);
     }
     else
-        return new Variable(parseName());
+        return new Variable(parseName(exp));
     return 0;
 }

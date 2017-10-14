@@ -2,12 +2,21 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <math.h>
 using namespace std;
 
 #include "expression.h"
 #include "subexpression.h"
 #include "symboltable.h"
 #include "parse.h"
+
+/*
+ File: module3.cpp
+ Author: Kenneth Korcal
+ Date: Oct 13, 2017
+ Purpose: read input file, parses line of input into binary tree
+          , and recursively evaluates the tree
+ */
 
 SymbolTable symbolTable;
 
@@ -22,24 +31,23 @@ int main()
     }else {
         string line;
         while(getline(reader, line)) {
-            cout << "reading line: " << line << endl;
+            cout << "line: " << line << endl;
             Expression* expression = NULL;
             
             int comma = (int) line.find(',');
             string exp = line.substr(0, comma);
             string assigns = line.substr(comma + 2);
             
-            cout << "parsing expression: " << exp << endl;
+            // cout << "parsing expression: " << exp << endl;
             expression = SubExpression::parse(exp);
-            cout << "assigning variables: " << assigns << endl;
+            // cout << "assigning variables: " << assigns << endl;
             parseAssignments(assigns);
             
-//            cout << "x = " << symbolTable.lookUp("x") << endl;
-//            cout << "y = " << symbolTable.lookUp("y") << endl;
-//            cout << "z = " << symbolTable.lookUp("z") << endl;
+            // int result = expression->evaluate();
+            double result = expression->evaluate();
+            cout << "result: " << round(result) << "\n\n";
             
-            
-//            cout << "evaluation result: " << expression->evaluate() << "\n\n";
+            symbolTable.resetElements();
         }
         
         reader.close();
@@ -57,7 +65,7 @@ void parseAssignments(string assigns)
     for(int i = 0; i < assigns.size(); i++) {
         if(assigns[i] == ',' || assigns[i] == ';') {
             variable += acc[0];
-            value += acc[acc.length() - 1];
+            value += acc.substr(4);
             symbolTable.insert(variable, stod(value));
             acc = "";
             variable = "";

@@ -26,7 +26,6 @@ SubExpression::SubExpression(Expression* left, Expression* right)
 
 Expression* SubExpression::parse(string exp)
 {
-    // need to branch parse into three methods
     
     Expression* left;
     Expression* right;
@@ -120,6 +119,9 @@ Expression* SubExpression::parse(string exp)
     return 0;
 }
 
+// finds the nested expression
+// pointer is used to keep track of which part of exp is being parsed
+// returns when the stack of parentheses is empty
 string SubExpression::innerExpression(int* idx, string exp) {
     
     if(exp[*idx] != '(') {
@@ -149,15 +151,10 @@ string SubExpression::innerExpression(int* idx, string exp) {
     return innerExp;
 }
 
+// gets the literal or value
 char SubExpression::innerValue(int* idx, string exp) {
     string innerVal = exp.substr(*idx, 1);
     // increment to skip space
     *idx = *idx + 2;
     return innerVal[0];
-}
-
-// recursively traverses the expression and finds the value
-// looks at the symbol table to determine variable values
-double SubExpression::evaluate() {
-    return 0;
 }

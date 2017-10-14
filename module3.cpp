@@ -12,7 +12,6 @@ using namespace std;
 SymbolTable symbolTable;
 
 void parseAssignments(string);
-//int indexof(string, char);
 
 int main()
 {
@@ -32,45 +31,40 @@ int main()
             
             cout << "parsing expression: " << exp << endl;
             expression = SubExpression::parse(exp);
-            int temp = 0;
-            cout << "parsed: " << temp << endl;
+            cout << "assigning variables: " << assigns << endl;
+            parseAssignments(assigns);
+            
+//            cout << "x = " << symbolTable.lookUp("x") << endl;
+//            cout << "y = " << symbolTable.lookUp("y") << endl;
+//            cout << "z = " << symbolTable.lookUp("z") << endl;
+            
+            
+//            cout << "evaluation result: " << expression->evaluate() << "\n\n";
         }
         
         reader.close();
     }
     
-    
-//    cout << "Please enter each character in the expresion (use , to terminate): " << endl;
-//    expression = SubExpression::parse();
-//    cout << "Please enter each assignments followed by a comma (use ; to terminate):";
-//    parseAssignments();
-//    cout << "Value = " << expression->evaluate() << endl;
     return 0;
 }
 
 void parseAssignments(string assigns)
 {
-    char assignop, delimiter;
-    string variable;
-    double value;
-    do
-    {
-        variable = parseName(assigns);
-        cin >> ws >> assignop >> value >> delimiter;
-        symbolTable.insert(variable, value);
+    string acc = "";
+    string variable = "";
+    string value = "";
+    
+    for(int i = 0; i < assigns.size(); i++) {
+        if(assigns[i] == ',' || assigns[i] == ';') {
+            variable += acc[0];
+            value += acc[acc.length() - 1];
+            symbolTable.insert(variable, stod(value));
+            acc = "";
+            variable = "";
+            value = "";
+            i++;
+        }else {
+            acc += assigns[i];
+        }
     }
-    while (delimiter == ',');
 }
-
-//int indexof(string exp, char c) {
-//    int idx = -1;
-//    
-//    for(int i = 0; i < exp.size(); i++) {
-//        if(exp[i] == c) {
-//            idx = i;
-//            break;
-//        }
-//    }
-//    
-//    return idx;
-//}

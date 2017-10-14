@@ -30,8 +30,9 @@ int main()
         cout << "Error reading file" << endl;
     }else {
         string line;
+        int testIdx = 1;
         while(getline(reader, line)) {
-            cout << "line: " << line << endl;
+            cout << "test " << testIdx << ": " << line << endl;
             Expression* expression = NULL;
             
             int comma = (int) line.find(',');
@@ -48,6 +49,7 @@ int main()
             cout << "result: " << round(result) << "\n\n";
             
             symbolTable.resetElements();
+            testIdx++;
         }
         
         reader.close();
